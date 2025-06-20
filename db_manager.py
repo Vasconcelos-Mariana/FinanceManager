@@ -64,3 +64,23 @@ def get_accounts():
     with connect() as conn:
         cursor = conn.execute("SELECT * FROM accounts")
         return cursor.fetchall()
+
+def add_transaction(account_id, category_id, amount, type_, description, date):
+    with connect() as conn:
+        conn.execute("""
+            INSERT INTO transactions (account_id, category_id, amount, type, description, date)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (account_id, category_id, amount, type_, description, date))
+        conn.commit()
+
+def get_recent_transactions(limit=5):
+    with connect() as conn:
+        cursor = conn.execute("""
+            SELECT t.id, a.name AS account, c.name AS category, t.amount, t.type, t.description, t.date
+            FROM transactions t
+            LEFT JOIN accounts a ON t.account_id = a.id
+            LEFT JOIN categories c ON t.category_id = c.id
+            ORDER BY date(t.date) DESC
+            LIMIT ?
+        """, (limit,))
+        return cursor.fetchall()

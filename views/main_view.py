@@ -1,4 +1,6 @@
 import customtkinter as ctk
+from controllers import main_controller
+
 
 class MainFrame(ctk.CTkFrame):
     def __init__(self, parent, controller):
@@ -13,11 +15,8 @@ class MainFrame(ctk.CTkFrame):
         sidebar = ctk.CTkFrame (self,width=200, fg_color="#033520",corner_radius=0)
         sidebar.pack(side="left",fill="both", expand='false')
 
-        ctk.CTkLabel(
-            sidebar,
-            text="    Menu Principal    ",
-            font=ctk.CTkFont("Calibri", 20, weight="bold"),
-            text_color="white"
+        ctk.CTkLabel(sidebar,
+            text="    Menu Principal    ",font=ctk.CTkFont("Calibri", 20, weight="bold"),text_color="white"
         ).pack(pady=20)
 
         buttons = [
@@ -42,13 +41,9 @@ class MainFrame(ctk.CTkFrame):
                 anchor="w",
             ).pack(pady=10, padx=20, fill="x")
 
-
-        ctk.CTkLabel(
-            sidebar,
-            text="    v  0.1.0",
-            font=ctk.CTkFont(size=11),
-            text_color="white",
-        ).pack(side="bottom", anchor='w', pady=10)
+# Version
+        ctk.CTkLabel(sidebar,
+            text="    v  0.1.0",font=ctk.CTkFont(size=11),text_color="white",).pack(side="bottom", anchor='w', pady=10)
 
 
 # Dashboard
@@ -87,15 +82,44 @@ class MainFrame(ctk.CTkFrame):
         left_bottom_container.pack_propagate(False)
 
 # LEFT COLUMN - BOTTOM LEFT CONTENT (Recent Transactions)
-        frame_transactions = ctk.CTkFrame(
-            left_bottom_container,
-            fg_color="#e0f6e6",
-            corner_radius=10,
-            width=200,
-            height=100
-        )
-        frame_transactions.pack(side="left", fill="both", expand=True, padx=(0, 5))
-        frame_transactions.pack_propagate(False)
+        def display_recent_transactions(self):
+    # Limpa o conteúdo anterior do frame
+            for widget in self.frame_transactions.winfo_children():
+                widget.destroy()
+
+    # Título
+            ctk.CTkLabel(
+                self.frame_transactions,
+                text="Recent Transactions",
+                font=ctk.CTkFont(size=16, weight="bold"),
+                text_color="black"
+            ).pack(pady=(10, 5))
+
+    # Obter transações do controller principal
+            transactions = main_controller.get_recent_transactions()
+
+    # Se não houver transações, mostrar mensagem
+            if not transactions:
+                ctk.CTkLabel(
+                    self.frame_transactions,
+                    text="No transactions yet.",
+                    font=ctk.CTkFont(size=12),
+                    text_color="gray"
+                ).pack(pady=10)
+                return
+
+    # Mostrar cada transação
+            for tx in transactions:
+                tx_text = f"[{tx[6]}] {tx[3]:.2f}€ ({tx[4]})\n{tx[5]} – {tx[2]} ({tx[1]})"
+                label = ctk.CTkLabel(
+                    self.frame_transactions,
+                    text=tx_text,
+                    anchor="w",
+                    justify="left",
+                    font=ctk.CTkFont(size=12),
+                    text_color="#1a1a1a"
+                )
+                label.pack(fill="x", padx=10, pady=4)
 
 # LEFT COLUMN - BOTTOM RIGHT CONTENT (Statistics)
         frame_statistics = ctk.CTkFrame(
