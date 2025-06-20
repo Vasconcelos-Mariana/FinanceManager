@@ -53,17 +53,71 @@ class MainFrame(ctk.CTkFrame):
 
 # Dashboard
 
-        self.main_area = ctk.CTkFrame(self, fg_color="#7adca4",corner_radius=0)
+        self.main_area = ctk.CTkFrame(self, fg_color="#1c6a42",corner_radius=0)
         self.main_area.pack(side="left", fill="both", expand=True)
 
         ctk.CTkLabel(
             self.main_area,
             text="Dashboard View",
             font=ctk.CTkFont(size=24, weight="bold"),
-            text_color="#0f3d2e"
-        ).pack(pady=50)
+            text_color="white",
+        ).pack(pady=(20,10))
+
+# COLUMNS CONTAINER
+        content_container = ctk.CTkFrame(self.main_area, fg_color="transparent")
+        content_container.pack(fill="both", expand=True, padx=20, pady=20)
+
+# LEFT COLUMN (mais estreita)
+        left_col = ctk.CTkFrame(content_container, fg_color="transparent", width=800)
+        left_col.pack(side="left", fill="y", expand=False, padx=(0, 10))
+        left_col.pack_propagate(False)
+
+# RIGHT COLUMN (ocupa o resto)
+        right_col = ctk.CTkFrame(content_container, fg_color="transparent")
+        right_col.pack(side="left", fill="both", expand=True)
+
+# LEFT TOP CONTENT - mais alto
+        frame_balance = ctk.CTkFrame(left_col, fg_color="#e0f6e6", corner_radius=10, height=350)
+        frame_balance.pack(fill="x", padx=(0.0), pady=(0, 10))
+        frame_balance.pack_propagate(False)
+
+# CONTAINER - LEFT BOTTOM (ocupa tudo)
+        left_bottom_container = ctk.CTkFrame(left_col, fg_color="transparent")
+        left_bottom_container.pack(fill="both", expand=True)
+        left_bottom_container.pack_propagate(False)
+
+# LEFT COLUMN - BOTTOM LEFT CONTENT (Recent Transactions)
+        frame_transactions = ctk.CTkFrame(
+            left_bottom_container,
+            fg_color="#e0f6e6",
+            corner_radius=10,
+            width=200,
+            height=100
+        )
+        frame_transactions.pack(side="left", fill="both", expand=True, padx=(0, 5))
+        frame_transactions.pack_propagate(False)
+
+# LEFT COLUMN - BOTTOM RIGHT CONTENT (Statistics)
+        frame_statistics = ctk.CTkFrame(
+            left_bottom_container,
+            fg_color="#e0f6e6",
+        corner_radius=10,
+        width=200,
+        height=100
+        )
+        frame_statistics.pack(side="left", fill="both", expand=True, padx=(5, 0))
+        frame_statistics.pack_propagate(False)
 
 
+# RIGHT TOP CONTENT
+        frame_spending = ctk.CTkFrame(right_col, fg_color="#e0f6e6", corner_radius=10, height=400)
+        frame_spending.pack(fill="x", pady=(0,10))
+        frame_spending.pack_propagate(False)
+
+# RIGHT BOTTOM CONTENT
+        frame_goals = ctk.CTkFrame(right_col, fg_color="#e0f6e6", corner_radius=10, height=300)
+        frame_goals.pack(fill="x")
+        frame_goals.pack_propagate(False)
 
     def go_dashboard(self):
         print("Dashboard clicked")
@@ -82,7 +136,6 @@ class MainFrame(ctk.CTkFrame):
 
     def go_statistics(self):
         print('statistics clicked')
-
 
     def go_settings(self):
         print("Settings clicked")
