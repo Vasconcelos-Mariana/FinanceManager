@@ -72,7 +72,7 @@ class MainFrame(ctk.CTkFrame):
         right_col.pack(side="left", fill="both", expand=True)
 
 # LEFT TOP CONTENT - mais alto
-        frame_balance = ctk.CTkFrame(left_col, fg_color="#e0f6e6", corner_radius=10, height=350)
+        frame_balance = ctk.CTkFrame(left_col, fg_color="#e5fde4", corner_radius=10, height=350)
         frame_balance.pack(fill="x", padx=(0.0), pady=(0, 10))
         frame_balance.pack_propagate(False)
 
@@ -82,6 +82,7 @@ class MainFrame(ctk.CTkFrame):
         left_bottom_container.pack_propagate(False)
 
 # LEFT COLUMN - BOTTOM LEFT CONTENT (Recent Transactions)
+
         def display_recent_transactions(self):
     # Limpa o conteúdo anterior do frame
             for widget in self.frame_transactions.winfo_children():
@@ -95,10 +96,8 @@ class MainFrame(ctk.CTkFrame):
                 text_color="black"
             ).pack(pady=(10, 5))
 
-    # Obter transações do controller principal
             transactions = main_controller.get_recent_transactions()
 
-    # Se não houver transações, mostrar mensagem
             if not transactions:
                 ctk.CTkLabel(
                     self.frame_transactions,
@@ -124,7 +123,7 @@ class MainFrame(ctk.CTkFrame):
 # LEFT COLUMN - BOTTOM RIGHT CONTENT (Statistics)
         frame_statistics = ctk.CTkFrame(
             left_bottom_container,
-            fg_color="#e0f6e6",
+            fg_color="#e5fde4",
         corner_radius=10,
         width=200,
         height=100
@@ -134,12 +133,12 @@ class MainFrame(ctk.CTkFrame):
 
 
 # RIGHT TOP CONTENT
-        frame_spending = ctk.CTkFrame(right_col, fg_color="#e0f6e6", corner_radius=10, height=400)
+        frame_spending = ctk.CTkFrame(right_col, fg_color="#e5fde4", corner_radius=10, height=400)
         frame_spending.pack(fill="x", pady=(0,10))
         frame_spending.pack_propagate(False)
 
 # RIGHT BOTTOM CONTENT
-        frame_goals = ctk.CTkFrame(right_col, fg_color="#e0f6e6", corner_radius=10, height=300)
+        frame_goals = ctk.CTkFrame(right_col, fg_color="#e5fde4", corner_radius=10, height=300)
         frame_goals.pack(fill="x")
         frame_goals.pack_propagate(False)
 
